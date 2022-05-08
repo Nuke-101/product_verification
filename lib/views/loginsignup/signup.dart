@@ -3,13 +3,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:product_verification/utils/authservices.dart';
+import 'package:product_verification/utils/auth_controller.dart';
 import 'package:product_verification/utils/show_password_controller.dart';
 import 'package:product_verification/views/home.dart';
+import 'package:product_verification/views/loginsignup/login.dart';
 import 'package:product_verification/views/widgets/buttons.dart';
 import 'package:product_verification/views/widgets/colors.dart';
 import 'package:product_verification/views/widgets/input.dart';
-import 'package:product_verification/views/widgets/passwordinput.dart';
+import 'package:product_verification/views/widgets/password_input.dart';
 import 'package:provider/provider.dart';
 
 class SignUpPage extends StatelessWidget {
@@ -87,27 +88,21 @@ class SignUpPage extends StatelessWidget {
                         final String email = emailController.text.trim();
                         final String password = passwordController.text.trim();
 
-                        if (email.isEmpty) {
-                          Get.snackbar("Error", "Email is invalid or empty");
-                        } else if (password.isEmpty) {
-                          Get.snackbar(
-                              "Error", "Password is incorrect or empty");
-                        } else {
-                          context
-                              .read<AuthService>()
-                              .signUp(email, password)
-                              .then((value) async {
-                            User? user = FirebaseAuth.instance.currentUser;
-                            await FirebaseFirestore.instance
-                                .collection("users")
-                                .doc(user?.uid)
-                                .set({
-                              'uid': user?.uid,
-                              "email": email,
-                              "password": password
-                            });
-                          });
-                        }
+                        // context
+                        //     .read<AuthService>()
+                        //     .signUp(email, password)
+                        //     .then((value) async {
+                        //   User? user = FirebaseAuth.instance.currentUser;
+                        //   await FirebaseFirestore.instance
+                        //       .collection("users")
+                        //       .doc(user?.uid)
+                        //       .set({
+                        //     'uid': user?.uid,
+                        //     "email": email,
+                        //     "password": password
+                        //   });
+                        // });
+                        AuthController.instance.registerUser(email, password);
                       },
                     ),
                   ),
@@ -129,7 +124,7 @@ class SignUpPage extends StatelessWidget {
                             TextSpan(
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
-                                  Navigator.pop(context);
+                                  Get.offAll(() => LoginPage());
                                 },
                               text: "Login",
                               style: TextStyle(

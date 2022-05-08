@@ -2,46 +2,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:product_verification/utils/web3controller.dart';
+import 'package:product_verification/utils/auth_controller.dart';
+import 'package:product_verification/utils/scan_controller.dart';
+import 'package:product_verification/utils/web3_controller.dart';
 import 'package:product_verification/views/addproductpage.dart';
 import 'package:product_verification/views/resultpage.dart';
 import 'package:product_verification/views/widgets/buttons.dart';
-import 'package:qrscan/qrscan.dart' as scanner;
 
-class HomePage extends StatefulWidget {
-  HomePage({Key? key}) : super(key: key);
+class HomePage extends StatelessWidget {
+  final web3Controller = Get.find<Web3Controller>();
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  final web3Controller = Get.put(Web3Controller());
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   FirebaseAuth.instance.signOut();
-  // }
-
-  Future _scanQR() async {
-    PermissionStatus cameraPermissionStatus = await Permission.camera.status;
-
-    if (cameraPermissionStatus == PermissionStatus.granted) {
-      String scannedQRData = await scanner.scan() ?? "";
-      return scannedQRData;
-    } else if (cameraPermissionStatus == PermissionStatus.denied) {
-      cameraPermissionStatus = await Permission.camera.request();
-      if (cameraPermissionStatus.isGranted) {
-        String scannedQRData = await scanner.scan() ?? "";
-        return scannedQRData;
-      }
-    } else if (cameraPermissionStatus == PermissionStatus.permanentlyDenied) {
-      Get.snackbar("Error Accessing Camera",
-          "Camera permission denied permanently, please change from your device settings.");
-      return;
-    }
-  }
+  final scanController = Get.find<ScanController>();
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +22,7 @@ class _HomePageState extends State<HomePage> {
         actions: [
           IconButton(
               onPressed: () {
-                FirebaseAuth.instance.signOut();
+                AuthController.instance.logOut();
               },
               icon: const Icon(
                 Icons.logout_outlined,
@@ -61,7 +32,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: GetBuilder<Web3Controller>(builder: (controller) {
         return SingleChildScrollView(
-          child: Container(
+          child: SizedBox(
             height: 500,
             child: Center(
               child: Padding(
@@ -70,7 +41,7 @@ class _HomePageState extends State<HomePage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    FlatButton3Builder(
+                    FlatButtonwithBorderBuilder(
                       buttonText: "Add Product",
                       color: Color(0xffFFBD00),
                       onTap: () {
@@ -89,7 +60,7 @@ class _HomePageState extends State<HomePage> {
                       buttonText: "Scan QR",
                       color: Color(0xffFFBD00),
                       onTap: () async {
-                        String scannedData = await _scanQR();
+                        String scannedData = await scanController.scanQR();
                         List<dynamic> scannedResult =
                             await controller.getData(scannedData);
                         await Get.to(() => ResultPage(

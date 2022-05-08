@@ -57,12 +57,12 @@ class FlatButton2Builder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      shape: StadiumBorder(),
+      shape: const StadiumBorder(),
       child: InkWell(
         onTap: onTap,
         child: Container(
           height: 50,
-          padding: EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
             color: color,
@@ -84,8 +84,8 @@ class FlatButton2Builder extends StatelessWidget {
   }
 }
 
-class FlatButton3Builder extends StatelessWidget {
-  const FlatButton3Builder({
+class FlatButtonwithBorderBuilder extends StatelessWidget {
+  const FlatButtonwithBorderBuilder({
     Key? key,
     required this.onTap,
     required this.buttonText,
@@ -109,7 +109,7 @@ class FlatButton3Builder extends StatelessWidget {
         onTap: onTap,
         child: Container(
           height: 50,
-          padding: EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
             color: Colors.transparent,
@@ -123,6 +123,66 @@ class FlatButton3Builder extends StatelessWidget {
                 fontWeight: FontWeight.w400,
                 color: color,
               ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class FlatIconButtonBuilder extends StatelessWidget {
+  const FlatIconButtonBuilder({
+    Key? key,
+    required this.onTap,
+    required this.buttonText,
+    required this.color,
+    required this.width,
+    required this.iconColor,
+    required this.icon,
+  }) : super(key: key);
+
+  final String buttonText;
+  final VoidCallback onTap;
+  final Color color, iconColor;
+  final double width;
+  final IconData icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      shape: StadiumBorder(),
+      child: InkWell(
+        onTap: onTap,
+        child: Container(
+          height: 48,
+          width: width,
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            color: color,
+          ),
+          child: Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  icon,
+                  color: iconColor,
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  buttonText,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontFamily: "Gilroy",
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
             ),
           ),
         ),

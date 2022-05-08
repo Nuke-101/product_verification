@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 //GETX CONTROLLERS
 import 'package:get/get.dart';
 import 'package:product_verification/utils/show_password_controller.dart';
-import 'package:product_verification/views/widgets/CustomIcons.dart';
+import 'package:product_verification/views/widgets/customIcons.dart';
 import 'package:product_verification/views/widgets/colors.dart';
 
 //STYLES

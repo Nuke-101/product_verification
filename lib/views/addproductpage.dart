@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:product_verification/utils/web3controller.dart';
+import 'package:product_verification/utils/web3_controller.dart';
 import 'package:product_verification/views/widgets/buttons.dart';
 import 'package:product_verification/views/widgets/input.dart';
 
