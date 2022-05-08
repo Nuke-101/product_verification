@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:product_verification/utils/web3_controller.dart';
 import 'package:product_verification/views/widgets/buttons.dart';
+import 'package:product_verification/views/widgets/colors.dart';
 import 'package:product_verification/views/widgets/input.dart';
 
 class AddProductPage extends StatelessWidget {
@@ -19,8 +20,17 @@ class AddProductPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: white,
         elevation: 0,
-        title: Text("Add Product to ETH Blockchain"),
+        title: Text(
+          "Add Product to ETH Blockchain",
+          style: TextStyle(
+            color: defTextColor,
+            fontSize: 18,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
       ),
       body: GetBuilder<Web3Controller>(builder: (_) {
         return SingleChildScrollView(

@@ -23,6 +23,7 @@ Color fontColor = Color(0xff131a31);
 Color yellow = Color(0xffFFC43D);
 Color mango = Color(0xffFFBD00);
 Color orange = Colors.orange;
+Color brown = Color.fromARGB(255, 37, 22, 3);
 
 //Light Theme colors
 Color backgroundLight = Color(0xFFFFFFFF);

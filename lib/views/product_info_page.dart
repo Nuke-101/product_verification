@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:product_verification/views/widgets/colors.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-class ResultPage extends StatelessWidget {
-  const ResultPage(
+class ProductInfoPage extends StatelessWidget {
+  const ProductInfoPage(
       {Key? key, required this.productAddress, required this.results})
       : super(key: key);
 
@@ -17,7 +17,7 @@ class ResultPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: white,
         elevation: 0,
-        title: Text("Scan Results"),
+        title: Text("Product Info"),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -49,35 +49,40 @@ class ResultPage extends StatelessWidget {
                         child: Text("No Product found on this address"),
                       )
                     : Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
+                          Text(
+                            "Ethereum Address",
+                            style: TextStyle(
+                              color: brown,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
                           Center(
                             child: Container(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 20,
                               ),
-                              width: 180,
+                              width: 200,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20),
-                                color: Colors.green,
+                                color: mango,
                               ),
                               height: 30,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                children: const [
-                                  Icon(
-                                    Icons.shield_rounded,
-                                    size: 16,
-                                    color: Colors.white,
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
+                                children: [
                                   Text(
-                                    "Product Verified",
+                                    productAddress.length >= 20
+                                        ? productAddress.substring(0, 19) +
+                                            "..."
+                                        : productAddress,
                                     style: TextStyle(
-                                      color: Colors.white,
+                                      color: brown,
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),

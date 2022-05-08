@@ -18,7 +18,7 @@ class Web3Controller extends GetxController {
   late final String productOrigin;
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     httpClient = Client();
     ethClient = Web3Client(
@@ -30,7 +30,7 @@ class Web3Controller extends GetxController {
   Future<DeployedContract> loadFactoryContract() async {
     String abi = await rootBundle.loadString("assets/productfactory.json");
     EthereumAddress contractAddress =
-        EthereumAddress.fromHex("0xf0757Fb8124c8d408f02B8CA6BdA898238CD5Cc7");
+        EthereumAddress.fromHex("0xEc8bF6d065b263a0A7A55B17C56C07E42C9FccD7");
     final contract = DeployedContract(
       ContractAbi.fromJson(abi, "ProductFactory"),
       contractAddress,
@@ -91,11 +91,13 @@ class Web3Controller extends GetxController {
   }
 
   Future<List<dynamic>> getProducts() async {
-    final contract = await loadFactoryContract();
+    final DeployedContract productFactory = await loadFactoryContract();
+    final ContractFunction getProducts = productFactory.function("getProducts");
+    List res = await ethClient
+        .call(contract: productFactory, function: getProducts, params: []);
 
-    List<dynamic> products = await query("getProducts", []);
-
-    return products;
+    List addresses = res[0];
+    return addresses;
   }
 
   Future<List<dynamic>> getData(String address) async {
